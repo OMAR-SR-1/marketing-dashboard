@@ -1,0 +1,55 @@
+<div class="min-h-screen bg-gray-100 font-sans">
+
+  <nav class="bg-white shadow-sm border-b border-gray-200 px-6 py-4">
+    <div class="flex justify-between items-center max-w-7xl mx-auto">
+      <span class="text-xl font-bold text-indigo-600"></span>
+      <span class="text-sm bg-indigo-50 text-indigo-700 px-3 py-1 rounded-full font-medium">Dashboard Actif</span>
+    </div>
+  </nav>
+
+  <main class="max-w-7xl mx-auto p-6 lg:p-8">
+    
+    <div class="mb-8">
+      <h1 class="text-3xl font-bold text-gray-900">Tableau de Bord Commercial</h1>
+      <p class="text-gray-600 mt-1">Analyse des indicateurs de performance et de l'activité e-commerce.</p>
+    </div>
+
+    
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8" *ngIf="dashboardData">
+      <div *ngFor="let kpi of dashboardData.kpis" class="bg-white p-6 rounded-2xl shadow-sm border border-gray-200">
+        <p class="text-xs font-semibold text-gray-400 uppercase tracking-wider">{{ kpi.title }}</p>
+        <div class="flex items-baseline justify-between mt-3">
+          <span class="text-2xl font-bold text-gray-900">{{ kpi.value }}</span>
+          <span [ngClass]="kpi.positive ? 'text-green-600 bg-green-50' : 'text-red-600 bg-red-50'" 
+                class="text-xs font-bold px-2.5 py-1 rounded-full">
+            {{ kpi.change }}
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+      
+      <div class="lg:col-span-2 bg-white p-6 rounded-2xl shadow-sm border border-gray-200">
+        <h3 class="text-lg font-bold text-gray-900 mb-4">Évolution du Chiffre d'Affaires</h3>
+        <div class="relative h-64">
+          <canvas #salesChart></canvas>
+        </div>
+      </div>
+
+      <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-200" *ngIf="dashboardData">
+        <h3 class="text-lg font-bold text-gray-900 mb-4">Top Articles Vendus</h3>
+        <div class="space-y-4">
+          <div *ngFor="let product of dashboardData.topProducts" class="flex items-center justify-between p-3.5 bg-gray-50 rounded-xl border border-gray-100">
+            <div>
+              <p class="text-sm font-semibold text-gray-900">{{ product.name }}</p>
+              <p class="text-xs text-gray-500 mt-0.5">{{ product.sales }} unités vendues</p>
+            </div>
+            <span class="text-sm font-bold text-indigo-600">{{ product.revenue }}</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </main>
+</div>
